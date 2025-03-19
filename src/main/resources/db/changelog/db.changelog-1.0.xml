@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro
+        http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet id="19032025-1" author="henrygrunberg">
+
+        <createTable tableName="station">
+            <column name="station_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="station_name" type="varchar(255)">
+                <constraints unique="true" nullable="false"/>
+            </column>
+        </createTable>
+
+        <insert tableName="station">
+            <column name="station_name" value="Tallinn-Harku"/>
+        </insert>
+        <insert tableName="station">
+            <column name="station_name" value="Tartu-Tõravere"/>
+        </insert>
+        <insert tableName="station">
+            <column name="station_name" value="Pärnu"/>
+        </insert>
+
+        <createTable tableName="weather">
+            <column name="weather_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="station_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="wmo_code" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="air_temperature" type="decimal(4,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="wind_speed" type="decimal(4,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="weather_phenomenon" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="timestamp" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="weather" baseColumnNames="station_id" constraintName="fk_weather_station_station_id" referencedTableName="station" referencedColumnNames="station_id"/>
+
+        <addUniqueConstraint tableName="weather" columnNames="station_id, timestamp" constraintName="uk_weather_station_id_timestamp"/>
+
+    </changeSet>
+    
+    <changeSet id="19032025-2" author="henrygrunberg">
+
+        <createTable tableName="station_fee">
+            <column name="station_fee_id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="station_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="vehicle_type" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="base_fee" type="decimal(4,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="temperature_below_minus_10_fee" type="decimal(4,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="temperature_between_minus_10_and_0_fee" type="decimal(4,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="wind_speed_between_10_and_20_fee" type="decimal(4,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="weather_phenomenon_snow_sleet_fee" type="decimal(4,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="weather_phenomenon_rain_fee" type="decimal(4,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="changed_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addUniqueConstraint tableName="station_fee" columnNames="station_id, vehicle_type" constraintName="uk_station_id_vehicle_type"/>
+
+        <addForeignKeyConstraint baseTableName="station_fee" baseColumnNames="station_id" constraintName="fk_station_fee_station_station_id" referencedTableName="station" referencedColumnNames="station_id"/>
+
+        <insert tableName="station_fee">
+            <column name="station_id" value="1"/>
+            <column name="vehicle_type" value="CAR"/>
+            <column name="base_fee" value="4.00"/>
+            <column name="temperature_below_minus_10_fee" value="0.00"/>
+            <column name="temperature_between_minus_10_and_0_fee" value="0.00"/>
+            <column name="wind_speed_between_10_and_20_fee" value="0.00"/>
+            <column name="weather_phenomenon_snow_sleet_fee" value="0.00"/>
+            <column name="weather_phenomenon_rain_fee" value="0.00"/>
+        </insert>
+
+        <insert tableName="station_fee">
+            <column name="station_id" value="1"/>
+            <column name="vehicle_type" value="SCOOTER"/>
+            <column name="base_fee" value="3.50"/>
+            <column name="temperature_below_minus_10_fee" value="1.00"/>
+            <column name="temperature_between_minus_10_and_0_fee" value="0.50"/>
+            <column name="wind_speed_between_10_and_20_fee" value="0.00"/>
+            <column name="weather_phenomenon_snow_sleet_fee" value="1.00"/>
+            <column name="weather_phenomenon_rain_fee" value="0.50"/>
+        </insert>
+
+        <insert tableName="station_fee">
+            <column name="station_id" value="1"/>
+            <column name="vehicle_type" value="BIKE"/>
+            <column name="base_fee" value="3.00"/>
+            <column name="temperature_below_minus_10_fee" value="1.00"/>
+            <column name="temperature_between_minus_10_and_0_fee" value="0.50"/>
+            <column name="wind_speed_between_10_and_20_fee" value="0.50"/>
+            <column name="weather_phenomenon_snow_sleet_fee" value="1.00"/>
+            <column name="weather_phenomenon_rain_fee" value="0.50"/>
+        </insert>
+
+        <insert tableName="station_fee">
+            <column name="station_id" value="2"/>
+            <column name="vehicle_type" value="CAR"/>
+            <column name="base_fee" value="3.50"/>
+            <column name="temperature_below_minus_10_fee" value="0.00"/>
+            <column name="temperature_between_minus_10_and_0_fee" value="0.00"/>
+            <column name="wind_speed_between_10_and_20_fee" value="0.00"/>
+            <column name="weather_phenomenon_snow_sleet_fee" value="0.00"/>
+            <column name="weather_phenomenon_rain_fee" value="0.00"/>
+        </insert>
+
+        <insert tableName="station_fee">
+            <column name="station_id" value="2"/>
+            <column name="vehicle_type" value="SCOOTER"/>
+            <column name="base_fee" value="3.00"/>
+            <column name="temperature_below_minus_10_fee" value="1.00"/>
+            <column name="temperature_between_minus_10_and_0_fee" value="0.50"/>
+            <column name="wind_speed_between_10_and_20_fee" value="0.00"/>
+            <column name="weather_phenomenon_snow_sleet_fee" value="1.00"/>
+            <column name="weather_phenomenon_rain_fee" value="0.50"/>
+        </insert>
+
+        <insert tableName="station_fee">
+            <column name="station_id" value="2"/>
+            <column name="vehicle_type" value="BIKE"/>
+            <column name="base_fee" value="2.50"/>
+            <column name="temperature_below_minus_10_fee" value="1.00"/>
+            <column name="temperature_between_minus_10_and_0_fee" value="0.50"/>
+            <column name="wind_speed_between_10_and_20_fee" value="0.50"/>
+            <column name="weather_phenomenon_snow_sleet_fee" value="1.00"/>
+            <column name="weather_phenomenon_rain_fee" value="0.50"/>
+        </insert>
+
+        <insert tableName="station_fee">
+            <column name="station_id" value="3"/>
+            <column name="vehicle_type" value="CAR"/>
+            <column name="base_fee" value="3.00"/>
+            <column name="temperature_below_minus_10_fee" value="0.00"/>
+            <column name="temperature_between_minus_10_and_0_fee" value="0.00"/>
+            <column name="wind_speed_between_10_and_20_fee" value="0.00"/>
+            <column name="weather_phenomenon_snow_sleet_fee" value="0.00"/>
+            <column name="weather_phenomenon_rain_fee" value="0.00"/>
+        </insert>
+
+        <insert tableName="station_fee">
+            <column name="station_id" value="3"/>
+            <column name="vehicle_type" value="SCOOTER"/>
+            <column name="base_fee" value="2.50"/>
+            <column name="temperature_below_minus_10_fee" value="1.00"/>
+            <column name="temperature_between_minus_10_and_0_fee" value="0.50"/>
+            <column name="wind_speed_between_10_and_20_fee" value="0.00"/>
+            <column name="weather_phenomenon_snow_sleet_fee" value="1.00"/>
+            <column name="weather_phenomenon_rain_fee" value="0.50"/>
+        </insert>
+
+        <insert tableName="station_fee">
+            <column name="station_id" value="3"/>
+            <column name="vehicle_type" value="BIKE"/>
+            <column name="base_fee" value="2.00"/>
+            <column name="temperature_below_minus_10_fee" value="1.00"/>
+            <column name="temperature_between_minus_10_and_0_fee" value="0.50"/>
+            <column name="wind_speed_between_10_and_20_fee" value="0.50"/>
+            <column name="weather_phenomenon_snow_sleet_fee" value="1.00"/>
+            <column name="weather_phenomenon_rain_fee" value="0.50"/>
+        </insert>
+
+    </changeSet>
+
+</databaseChangeLog>

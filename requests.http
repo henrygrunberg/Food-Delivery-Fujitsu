@@ -1,0 +1,43 @@
+POST http://localhost:8080/api/delivery
+Content-Type: application/json
+
+{
+  "city": "TALLINN",
+  "vehicleType": "BIKE"
+}
+
+
+###
+
+POST http://localhost:8080/api/delivery
+Content-Type: application/json
+
+{
+  "city": "UNKNOWN_CITY",
+  "vehicleType": "BIKE"
+}
+
+
+###
+
+POST http://localhost:8080/api/delivery
+Content-Type: application/json
+
+{
+  "city": "TALLINN",
+  "vehicleType": "BUS"
+}
+
+###
+
+POST http://localhost:8080/api/delivery
+Content-Type: application/json
+
+{
+"vehicleType": "BIKE"
+}
+
+
+###
+
+GET http://localhost:8080/api/station-fees/Tallinn
