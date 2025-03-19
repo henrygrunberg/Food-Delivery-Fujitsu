@@ -54,6 +54,14 @@ This is specified in the application.properties:
 
 The H2 database console will be available at: `http://localhost:8080/h2-console`
 
+The console has default log in credentials:
+
+JDBC URL: `jdbc:h2:file:./data/food_delivery_db`
+
+USERNAME: `sa`
+
+PASSWORD: *(leave empty)*
+
 ### Database schema
 ![DatabaseSchema](https://github.com/user-attachments/assets/0e013711-1895-4bd0-9017-1aafc8f9311b)
 
