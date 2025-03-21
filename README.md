@@ -72,6 +72,30 @@ Fetches weather data from the Estonian Environment Agency API: `https://www.ilma
 
 Inserts new weather data into the database.
 
+The execution time of the cron job is configurable via the `/src/main/resources/application.properties`
+
+```
+# Cron job configurable time
+weather.import.cron=0 15 * * * *
+```
+
+Cron expression explanation
+
+```
+Example:
+
+0 15 * * * *
+┬  ┬ ┬ ┬ ┬ ┬
+│  │ │ │ │ └──── Day of the week (0 - 7) (Sunday = 0 or 7)
+│  │ │ │ └────── Month (1 - 12)
+│  │ │ └──────── Day of the month (1 - 31)
+│  │ └────────── Hour (0 - 23)
+│  └──────────── Minute (0 - 59)
+└─────────────── Second (0 - 59)
+
+This expression means at second 0, at minute 15, every hour, day, month, weekday
+```
+
 ## Setup Instructions
 ### Backend (Spring Boot + H2 Database)
 ### Prerequisites
@@ -121,16 +145,14 @@ The API documentation is available via Swagger. All endpoints and DTOs can be fo
 
 ## Tests
 
-The project includes unit tests (using JUnit and Mockito) to verify the business logic in services and integration tests 
-(using Spring Boot Test) to ensure that API endpoints work correctly with the database.
+The project includes:
+- Unit tests (using JUnit and Mockito) to verify business logic in service layer
+- Integration tests (using Spring Boot Test) to ensure that API endpoints work correctly with the database.
 
-The tests cover fee calculations, weather data processing, and API responses with a coverage of more than 90%. 
+Test coverage is 100% for all business logic and API endpoints, excluding the cron job that fetches real weather data. Everything related to the cron job is excluded from coverage, as it depends on an external API.
 
-All tests can be run using `./gradlew test`.
+To run the tests in the correct order (enusring no data interference between integration test classes), run the following test suite class:
 
+`/src/test/java/com/fooddelivery/fooddeliveryfujitsu/RunTests.java`
 
-
-
-
-
-
+This class starts all of the tests and ensures the correct execution order of the tests.
