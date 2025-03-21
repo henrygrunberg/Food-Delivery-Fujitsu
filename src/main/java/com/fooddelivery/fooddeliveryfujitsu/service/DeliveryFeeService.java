@@ -6,6 +6,7 @@ import com.fooddelivery.fooddeliveryfujitsu.entity.StationFee;
 import com.fooddelivery.fooddeliveryfujitsu.entity.Weather;
 import com.fooddelivery.fooddeliveryfujitsu.enums.City;
 import com.fooddelivery.fooddeliveryfujitsu.enums.VehicleType;
+import com.fooddelivery.fooddeliveryfujitsu.exception.ClosestWeatherMoreThanOneDayApartException;
 import com.fooddelivery.fooddeliveryfujitsu.exception.ForbiddenVehicleUsageException;
 import com.fooddelivery.fooddeliveryfujitsu.exception.NotFoundException;
 import com.fooddelivery.fooddeliveryfujitsu.repository.StationFeeRepository;
@@ -67,8 +68,18 @@ public class DeliveryFeeService {
         return weatherRepository.findAllWeatherForStation(station)
                 .stream()
                 .min(Comparator.comparingLong(w -> Math.abs(Duration.between(w.getTimestamp(), time).toSeconds())))
+                .map(weather -> {
+                    long hoursDiff = Math.abs(Duration.between(weather.getTimestamp(), time).toHours());
+                    if (hoursDiff > 24) {
+                        throw new ClosestWeatherMoreThanOneDayApartException(
+                                "Closest weather data is more than 24 hours apart from the requested time: " + time
+                        );
+                    }
+                    return weather;
+                })
                 .orElseThrow(() -> new NotFoundException("No weather data found for station: " + station.getStationName() + " around time: " + time));
     }
+
 
     private double calculateTemperatureExtraFee(Double airTemperature, StationFee stationFee) {
         if (stationFee.getTemperatureBelowMinus10Fee() != null && airTemperature < -10) {

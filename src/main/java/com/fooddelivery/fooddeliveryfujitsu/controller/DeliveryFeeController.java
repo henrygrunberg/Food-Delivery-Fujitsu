@@ -27,7 +27,7 @@ public class DeliveryFeeController {
     @PostMapping()
     @Operation(summary = "Calculate delivery fee", description = "Calculates delivery fee based on city, vehicle type, and weather conditions.")
     @ApiResponse(responseCode = "200", description = "Delivery fee calculated successfully")
-    @ApiResponse(responseCode = "400", description = "Usage of selected vehicle type is forbidden or invalid input")
+    @ApiResponse(responseCode = "400", description = "Usage of selected vehicle type is forbidden or invalid input, Optional weather date more than 24 hours apart from the latest weather data.")
     @ApiResponse(responseCode = "404", description = "City or vehicle type not found")
     @ApiResponse(responseCode = "500", description = "Internal server error")
     public ResponseEntity<DeliveryFeeResponseDto> calculateDeliveryFee(@Valid @RequestBody DeliveryFeeRequestDto request) {

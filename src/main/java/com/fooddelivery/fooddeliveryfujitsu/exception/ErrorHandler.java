@@ -53,6 +53,12 @@ public class ErrorHandler {
         return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(ClosestWeatherMoreThanOneDayApartException.class)
+    public ResponseEntity<Object> handleClosestWeatherMoreThanOneDayApartException(ClosestWeatherMoreThanOneDayApartException e) {
+        log.warn("{}", e.getMessage());
+        return new ResponseEntity<>(new ErrorResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ErrorResponse> handleValidationException(MethodArgumentNotValidException e) {
         String errorMessage = e.getBindingResult().getFieldErrors().stream()

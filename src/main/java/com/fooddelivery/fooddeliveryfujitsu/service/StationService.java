@@ -23,12 +23,15 @@ public class StationService {
     }
 
     public String cityToStationName(City city) {
+        if (city == null) {
+            throw new InvalidCityException("Invalid city provided: null");
+        }
+
         log.info("Converting city {} to station name", city);
         return switch (city) {
             case TALLINN -> "Tallinn-Harku";
             case TARTU -> "Tartu-Tõravere";
             case PARNU -> "Pärnu";
-            default -> throw new InvalidCityException("Invalid city provided: " + city);
         };
     }
 }

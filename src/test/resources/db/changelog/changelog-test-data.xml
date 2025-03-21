@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <include file="db/changelog/changelog-master.xml"/>
+
+    <changeSet id="test-data-weather" author="henrygrunberg">
+
+        <!-- Tallinn-Harku -->
+        <insert tableName="weather">
+            <column name="station_id" value="1"/>
+            <column name="wmo_code" value="26038"/>
+            <column name="air_temperature" value="5"/>
+            <column name="wind_speed" value="10"/>
+            <column name="weather_phenomenon" value="Clear"/>
+            <column name="timestamp" value="2025-03-21T10:15:00"/>
+        </insert>
+
+        <insert tableName="weather">
+            <column name="station_id" value="1"/>
+            <column name="wmo_code" value="26038"/>
+            <column name="air_temperature" value="-15"/>
+            <column name="wind_speed" value="25"/>
+            <column name="weather_phenomenon" value="Blizzard"/>
+            <column name="timestamp" value="2025-03-21T11:15:00"/>
+        </insert>
+
+        <insert tableName="weather">
+            <column name="station_id" value="1"/>
+            <column name="wmo_code" value="26038"/>
+            <column name="air_temperature" value="-1"/>
+            <column name="wind_speed" value="5"/>
+            <column name="weather_phenomenon" value="Fog"/>
+            <column name="timestamp" value="2025-03-21T12:15:00"/>
+        </insert>
+
+        <insert tableName="weather">
+            <column name="station_id" value="1"/>
+            <column name="wmo_code" value="26038"/>
+            <column name="air_temperature" value="10"/>
+            <column name="wind_speed" value="18"/>
+            <column name="weather_phenomenon" value="Strong Wind"/>
+            <column name="timestamp" value="2025-03-21T13:15:00"/>
+        </insert>
+
+        <insert tableName="weather">
+            <column name="station_id" value="1"/>
+            <column name="wmo_code" value="26038"/>
+            <column name="air_temperature" value="3"/>
+            <column name="wind_speed" value="12"/>
+            <column name="weather_phenomenon" value="Light Rain"/>
+            <column name="timestamp" value="2025-03-21T14:15:00"/>
+        </insert>
+
+        <!-- Tartu-Tõravere -->
+        <insert tableName="weather">
+            <column name="station_id" value="2"/>
+            <column name="wmo_code" value="26242"/>
+            <column name="air_temperature" value="30"/>
+            <column name="wind_speed" value="8"/>
+            <column name="weather_phenomenon" value="Sunny"/>
+            <column name="timestamp" value="2025-03-21T10:15:00"/>
+        </insert>
+
+        <insert tableName="weather">
+            <column name="station_id" value="2"/>
+            <column name="wmo_code" value="26242"/>
+            <column name="air_temperature" value="-8"/>
+            <column name="wind_speed" value="22"/>
+            <column name="weather_phenomenon" value="Hail"/>
+            <column name="timestamp" value="2025-03-21T11:15:00"/>
+        </insert>
+
+        <insert tableName="weather">
+            <column name="station_id" value="2"/>
+            <column name="wmo_code" value="26242"/>
+            <column name="air_temperature" value="0.5"/>
+            <column name="wind_speed" value="15"/>
+            <column name="weather_phenomenon" value="Snow Showers"/>
+            <column name="timestamp" value="2025-03-21T12:15:00"/>
+        </insert>
+
+        <insert tableName="weather">
+            <column name="station_id" value="2"/>
+            <column name="wmo_code" value="26242"/>
+            <column name="air_temperature" value="2"/>
+            <column name="wind_speed" value="8"/>
+            <column name="weather_phenomenon" value="Hail"/>
+            <column name="timestamp" value="2025-03-21T13:15:00"/>
+        </insert>
+
+        <insert tableName="weather">
+            <column name="station_id" value="2"/>
+            <column name="wmo_code" value="26242"/>
+            <column name="air_temperature" value="4"/>
+            <column name="wind_speed" value="6"/>
+            <column name="weather_phenomenon" value="Drizzle"/>
+            <column name="timestamp" value="2025-03-21T14:15:00"/>
+        </insert>
+
+        <!-- Pärnu -->
+        <insert tableName="weather">
+            <column name="station_id" value="3"/>
+            <column name="wmo_code" value="41803"/>
+            <column name="air_temperature" value="25"/>
+            <column name="wind_speed" value="10"/>
+            <column name="weather_phenomenon" value="Partly Cloudy"/>
+            <column name="timestamp" value="2025-03-21T10:15:00"/>
+        </insert>
+
+        <insert tableName="weather">
+            <column name="station_id" value="3"/>
+            <column name="wmo_code" value="41803"/>
+            <column name="air_temperature" value="-9"/>
+            <column name="wind_speed" value="8"/>
+            <column name="weather_phenomenon" value="Heavy Snow"/>
+            <column name="timestamp" value="2025-03-21T11:15:00"/>
+        </insert>
+
+        <insert tableName="weather">
+            <column name="station_id" value="3"/>
+            <column name="wmo_code" value="41803"/>
+            <column name="air_temperature" value="6"/>
+            <column name="wind_speed" value="5"/>
+            <column name="weather_phenomenon" value="Light Rain"/>
+            <column name="timestamp" value="2025-03-21T12:15:00"/>
+        </insert>
+
+        <insert tableName="weather">
+            <column name="station_id" value="3"/>
+            <column name="wmo_code" value="41803"/>
+            <column name="air_temperature" value="20"/>
+            <column name="wind_speed" value="15"/>
+            <column name="weather_phenomenon" value="Strong Wind"/>
+            <column name="timestamp" value="2025-03-21T13:15:00"/>
+        </insert>
+
+    </changeSet>
+
+</databaseChangeLog>
